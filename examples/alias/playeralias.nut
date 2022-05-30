@@ -1,37 +1,39 @@
-function SavePlayerUID(player)
-{
-    SQLite_Query(db, format("INSERT INTO player_uids (uid, name) VALUES ('%s', '%s');", player.UID, player.Name));
+// --------------------------------------------------
+
+function SavePlayerUID(player) {
+    SQLite_Prepare(db, format("INSERT INTO player_uids (uid, name) VALUES ('%s', '%s');", player.UID, player.Name));
 }
 
-function GetPlayerUIDAliases(player)
-{
-    // try to get names
-    local stmt = SQLite_Query(db, format("SELECT name FROM player_uids WHERE uid = '%s';", player.UID));
-    // success
-    if (stmt)
-    {
-        // array holding string names
+// --------------------------------------------------
+
+function GetPlayerUIDAliases(player) {
+    // Try to get names.
+    local stmt = SQLite_Prepare(db, format("SELECT name FROM player_uids WHERE uid = '%s';", player.UID));
+    // Success.
+    if (stmt) {
+        // Array holding string names.
         local result = [];
         local playerName = player.Name;
-        do
-        {
-            // get name from current row
+        do {
+            // Get name from current row.
             local name = SQLite_GetColumnData(stmt, 0);
-            // append ONLY if 'name' != 'playerName'
-            if (name != playerName)
+            // Append ONLY if 'name' != 'playerName'.
+            if (name != playerName) {
                 result.append(name);
-        }
-        // loop until there are no more rows available
-        while (SQLite_GetNextRow(stmt));
-        // SELECT statements must always be freed!
-        SQLite_FreeQuery(stmt);
+            }
+        } while (SQLite_GetNextRow(stmt)); // Loop until there are no more rows available.
+        // 'SELECT' statements must always be freed!
+        SQLite_Finalize(stmt);
 
-        // did we actually append anything
+        // Did we actually append anything
         // to the resulting array?
-        if (result.len() > 0)
+        if (result.len() > 0) {
             return result;
+        }
     }
 
-    // return null in any case
+    // Return null in any case.
     return null;
 }
+
+// --------------------------------------------------

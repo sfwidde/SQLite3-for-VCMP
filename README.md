@@ -1,15 +1,15 @@
 # SQLite3 plugin for VC:MP 0.4
 
 **Available functions:**
-- `SQLite_Connect`
+- `SQLite_Open`
   - **Parameter:** _string_ file path.
   - **Return type:** _sqlite3*_.
   - Throws error.
-- `SQLite_Disconnect`
+- `SQLite_Close`
   - **Parameter:** _sqlite3*_.
   - Returns nothing.
   - Throws error.
-- `SQLite_Query`
+- `SQLite_Prepare`
   - **Parameters:** _sqlite3*_, _string_ query.
   - **Return type:** _sqlite3_stmt*_/_null_.
   - Throws error.
@@ -24,7 +24,7 @@
 - `SQLite_GetColumnData`
   - **Parameters:** _sqlite3_stmt*_, _int_ column index.
   - **Return type:** _int_/_float_/_string_/_null_.
-- `SQLite_FreeQuery`
+- `SQLite_Finalize`
   - **Parameter:** _sqlite3_stmt*_.
   - Returns nothing.
   - Throws no errors.

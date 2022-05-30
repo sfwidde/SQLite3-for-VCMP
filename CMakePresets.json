@@ -1,0 +1,88 @@
+﻿{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "linux-base",
+      "hidden": true,
+      "description": "Target the Windows Subsystem for Linux (WSL) or a remote Linux system.",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+          "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
+        }
+      }
+    },
+    {
+      "name": "linux-release-x86",
+      "displayName": "Linux Release (x86)",
+      "inherits": "linux-base",
+      "architecture": {
+        "value": "x86",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "linux-release-x64",
+      "displayName": "Linux Release (x64)",
+      "inherits": "linux-base",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "windows-base",
+      "description": "Target Windows with the Visual Studio development environment.",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl.exe",
+        "CMAKE_CXX_COMPILER": "cl.exe"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "windows-release-x86",
+      "displayName": "Windows Release (x86)",
+      "inherits": "windows-base",
+      "architecture": {
+        "value": "x86",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "windows-release-x64",
+      "displayName": "Windows Release (x64)",
+      "inherits": "windows-base",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    }
+  ]
+}
